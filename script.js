@@ -13,28 +13,28 @@ keyboard.className = 'keyboard';
 //create object with all key
 const keyArrEn = [
   ['`', '1', "2", "3", "4", "5", "6", "7", "8", "9", "0", "-", "=", 'Backspace', ],
-  ['Tab', "q", "w", "e", "r", "t", "y", "u", "i", "o", "p", "[", "]", 'DEL', ],
+  ['Tab', "q", "w", "e", "r", "t", "y", "u", "i", "o", "p", "[", "]", 'Delete', ],
   ['CapsLock', "a", "s", "d", "f", "g", "h", "j", "k", "l", ";", "'", `\\`, 'Enter',],
   ["Shift", '\\', "z", "x", "c", "v", "b", "n", "m", ",", ".", "/", '↑', "r-shift", ],
   ["Ctrl", "Win", "Alt", " ", "alt", "Ру", "←", "↓", "→", ],
 ];
 const keyArrEnCaps = [
   ['~', '!', "@", "#", "$", "%", "^", "&", "*", "(", ")", "_", "+", 'Backspace', ],
-  ['Tab', "Q", "W", "E", "R", "T", "Y", "U", "I", "O", "P", "{", "}", 'DEL', ],
+  ['Tab', "Q", "W", "E", "R", "T", "Y", "U", "I", "O", "P", "{", "}", 'Delete', ],
   ['CapsLock', "A", "S", "D", "F", "G", "H", "J", "K", "L", ":", '"', `|`, 'Enter',],
   ["Shift", '|', "Z", "X", "C", "V", "B", "N", "M", "<", ">", "?", '↑', "r-shift", ],
   ["Ctrl", "Win", "Alt", " ", "alt", "Ру", "←", "↓", "→", ],
 ];
 const keyArrRu = [
   ['ё', '1', "2", "3", "4", "5", "6", "7", "8", "9", "0", "-", "=", 'Backspace', ],
-  ['Tab', "й", "ц", "у", "к", "е", "н", "г", "ш", "щ", "з", "х", "ъ", 'DEL', ],
+  ['Tab', "й", "ц", "у", "к", "е", "н", "г", "ш", "щ", "з", "х", "ъ", 'Delete', ],
   ['CapsLock', "ф", "ы", "в", "а", "п", "р", "о", "л", "д", "ж", "э", `\\`, 'Enter',],
   ["Shift", '\\', "я", "ч", "с", "м", "и", "т", "ь", "б", "ю", ".", '↑', "r-shift", ],
   ["Ctrl", "Win", "Alt", " ", "alt", "En", "←", "↓", "→", ],
 ];
 const keyArrRuCaps = [
   ['Ё', '!', '"', "№", ";", "%", ":", "?", "*", "(", ")", "_", "+", 'Backspace', ],
-  ['Tab', "Й", "Ц", "У", "К", "Е", "Н", "Г", "Ш", "Щ", "З", "Х", "Ъ", 'DEL', ],
+  ['Tab', "Й", "Ц", "У", "К", "Е", "Н", "Г", "Ш", "Щ", "З", "Х", "Ъ", 'Delete', ],
   ['CapsLock', "Ф", "Ы", "В", "А", "П", "Р", "О", "Л", "Д", "Ж", "Э", `/`, 'Enter',],
   ["Shift", '/', "Я", "Ч", "С", "М", "И", "Т", "Ь", "Б", "Ю", ",", '↑', "r-shift", ],
   ["Ctrl", "Win", "Alt", " ", "alt", "En", "←", "↓", "→", ],
@@ -102,11 +102,28 @@ document.addEventListener('keydown', (event) => keyDownKeyboard(event));
 document.addEventListener('keyup', (event) => keyUpKeyboard(event));
 
 function keyDownKeyboard(event){
+  if(event.key === 'Control'){
+    document.getElementById('Ctrl').classList.add('active');
+    return;
+  }
+  if(event.code === 'ShiftRight'){
+    document.getElementById('r-shift').classList.add('active');
+    return;
+  }
   printInInput(event.key);
+  document.getElementById(event.key).classList.add('active');
 }
 
 function keyUpKeyboard(event){
-  console.log(event);
+  if(event.key === 'Control'){
+    document.getElementById('Ctrl').classList.remove('active');
+    return;
+  }
+  if(event.code === 'ShiftRight'){
+    document.getElementById('r-shift').classList.remove('active');
+    return;
+  }
+  document.getElementById(event.key).classList.remove('active');
 }
 
 function languageDetected(str){

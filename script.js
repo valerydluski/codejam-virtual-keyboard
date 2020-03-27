@@ -3,9 +3,8 @@ let text = prompt("Введите символ для определения я�
 let body = document.querySelector('body');
 let inputKeyboard = document.createElement('textarea');
 let wrapper = document.createElement('div');
-let keyboard = document.createElement('div');
-let startLanguage = navigator.language.slice(0, 2);  
-
+let keyboard = document.createElement('div'); 
+let keyboardLanguage;
 wrapper.className = 'wrapper';
 inputKeyboard.className = 'input-keyboard';
 keyboard.className = 'keyboard';
@@ -90,10 +89,21 @@ function unActive(target) {
 }
 
 document.addEventListener('mouseup', (event) =>{
+  if (checkCapsOrShift(event.target.id)){
+    return;
+  }
   unActive(event.target);
 });
 
 document.addEventListener('mousedown', (event) =>{
+  if (checkCapsOrShift(event.target.id)){
+    if (checkActiveIncludes(event.target.id)){
+      unActive(event.target);
+      return;
+    }
+    active(event.target);
+    return;
+  }
   active(event.target);
   printInInput(event.target.id);
 });
@@ -129,20 +139,24 @@ function keyUpKeyboard(event){
 function languageDetected(str){
   if(/[а-я]/.test(str)){
     createKeyboard(keyArrRu);
+    keyboardLanguage = 'ru';
   }
 
   if(/[А-Я]/.test(str)){
     createKeyboard(keyArrRuCaps);
     document.getElementById('CapsLock').classList.add('active');
+    keyboardLanguage = 'ru';
   }
 
   if(/[a-z]/.test(str)){
     createKeyboard(keyArrEn);
+    keyboardLanguage = 'en';
   }
 
   if(/[A-Z]/.test(str)){
     createKeyboard(keyArrEnCaps);
     document.getElementById('CapsLock').classList.add('active');
+    keyboardLanguage = 'en';
   }
  
   if(!(/[a-z]/i.test(str)) && !(/[а-я]/i.test(str))){
@@ -164,4 +178,15 @@ function printInInput(str){
   }
 }
 
+function checkCapsOrShift (str){
+  if (str === 'CapsLock' || str === 'Shift' || str === 'r-shift'){
+    return true;
+  }
+}
+
+function checkActiveIncludes (str){
+  if (document.getElementById(str).classList.contains('active')){
+    return true;
+  }
+}
 languageDetected(text);

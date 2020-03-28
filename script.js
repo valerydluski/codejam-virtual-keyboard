@@ -1,13 +1,15 @@
 let text = prompt("Введите символ для определения языка и регистра", );
-
+let keyboard = document.createElement('div');;
 let body = document.querySelector('body');
 let inputKeyboard = document.createElement('textarea');
 let wrapper = document.createElement('div');
-let keyboard = document.createElement('div'); 
 let keyboardLanguage;
+let keyboardCaps;
+keyboard.className = 'keyboard';
+keyboard.id = 'keyboard';
 wrapper.className = 'wrapper';
 inputKeyboard.className = 'input-keyboard';
-keyboard.className = 'keyboard';
+
 
 //create object with all key
 const keyArrEn = [
@@ -45,15 +47,19 @@ body.append(wrapper);
 wrapper.append(inputKeyboard);
 
 //create keyboard
-function createKeyboard(keyArr) {
+function createKeyboard(array) {
+  if (wrapper.querySelector('.keyboard')) {
+    deleteKeyboard();
+  }
   wrapper.append(keyboard);
-  for (let arr of keyArr) {
+  for (let arr of array) {
    arr.forEach(element => {
      createKey(element);
    });
  }
 }
 
+//create key
 function createKey(element){
   let key = document.createElement('div');
   key.className = 'key';
@@ -77,16 +83,17 @@ function createKey(element){
 }
 
 
-
 function active(target) {
-  if(target.classList.contains('key')){
+  if(target.classList.contains('key')){ 
     target.classList.add('active');
   }
 }
 
 function unActive(target) {
   target.classList.remove('active');
+  return target; 
 }
+
 
 document.addEventListener('mouseup', (event) =>{
   if (checkCapsOrShift(event.target.id)){
@@ -96,12 +103,24 @@ document.addEventListener('mouseup', (event) =>{
 });
 
 document.addEventListener('mousedown', (event) =>{
+  if (event.target.id === 'Ру'){
+      keyboardLanguage = 'ru';
+      detectedCapsAndLanguage();
+  }
+  if (event.target.id === 'En'){
+    keyboardLanguage = 'en';
+    detectedCapsAndLanguage();
+  }
   if (checkCapsOrShift(event.target.id)){
     if (checkActiveIncludes(event.target.id)){
       unActive(event.target);
+      keyboardCaps = false;
+      detectedCapsAndLanguage(event.target);
       return;
     }
     active(event.target);
+    keyboardCaps = true;
+    detectedCapsAndLanguage(event.target);
     return;
   }
   active(event.target);
@@ -140,30 +159,29 @@ function languageDetected(str){
   if(/[а-я]/.test(str)){
     createKeyboard(keyArrRu);
     keyboardLanguage = 'ru';
+    keyboardCaps = false;
   }
-
   if(/[А-Я]/.test(str)){
     createKeyboard(keyArrRuCaps);
     document.getElementById('CapsLock').classList.add('active');
     keyboardLanguage = 'ru';
+    keyboardCaps = true;
   }
-
   if(/[a-z]/.test(str)){
     createKeyboard(keyArrEn);
     keyboardLanguage = 'en';
+    eyboardCaps = false;
   }
-
   if(/[A-Z]/.test(str)){
     createKeyboard(keyArrEnCaps);
     document.getElementById('CapsLock').classList.add('active');
     keyboardLanguage = 'en';
+    keyboardCaps = true;
   }
- 
   if(!(/[a-z]/i.test(str)) && !(/[а-я]/i.test(str))){
     let newText = prompt("не удалось определить язык, введите букву", 1)
     languageDetected(newText);
   }
-  
 }
 
 function printInInput(str){
@@ -187,6 +205,33 @@ function checkCapsOrShift (str){
 function checkActiveIncludes (str){
   if (document.getElementById(str).classList.contains('active')){
     return true;
+  }
+}
+
+function deleteKeyboard(){
+  while (keyboard.hasChildNodes()) {  
+    keyboard.removeChild(keyboard.firstChild);
+  } 
+}
+
+function detectedCapsAndLanguage(str){
+  if (keyboardCaps){
+    if(keyboardLanguage === 'ru'){
+      createKeyboard(keyArrRuCaps);
+      document.getElementById(str.id).classList.add('active');
+    }
+    if(keyboardLanguage === 'en'){
+      createKeyboard(keyArrEnCaps); 
+      document.getElementById(str.id).classList.add('active');
+    }
+  }
+  if (!keyboardCaps){
+    if(keyboardLanguage === 'ru'){
+      createKeyboard(keyArrRu);
+    }
+    if(keyboardLanguage === 'en'){
+      createKeyboard(keyArrEn);
+    }
   }
 }
 languageDetected(text);

@@ -1,4 +1,4 @@
-let keyboard = document.createElement('div');;
+let keyboard = document.createElement('div');
 let body = document.querySelector('body');
 let inputKeyboard = document.createElement('textarea');
 let wrapper = document.createElement('div');
@@ -169,7 +169,10 @@ let keyDownKeyboard = (event) => {
     document.getElementById('r-shift').classList.add('active');
     return;
   }
-  printInInput(event.key);
+  if(event.key.length == 1){
+    languageDetected(event.key);
+  }
+  
   document.getElementById(event.key).classList.add('active');
 };
 
@@ -187,30 +190,30 @@ let keyUpKeyboard = (event) => {
 
 const languageDetected = (str) =>{
   if(/[а-я]/.test(str)){
-    createKeyboard(keyArrRu);
     keyboardLanguage = 'ru';
-    saveState(); 
     keyboardCaps = false;
+    saveState(); 
+    detectedCapsAndLanguage();
   }
   if(/[А-Я]/.test(str)){
-    createKeyboard(keyArrRuCaps);
-    document.getElementById('CapsLock').classList.add('active');
     keyboardLanguage = 'ru';
-    saveState(); 
     keyboardCaps = true;
+    saveState();
+    detectedCapsAndLanguage();
+    document.getElementById('CapsLock').classList.add('active'); 
   }
   if(/[a-z]/.test(str)){
-    createKeyboard(keyArrEn);
+    keyboardCaps = false;
     keyboardLanguage = 'en';
     saveState(); 
-    eyboardCaps = false;
+    detectedCapsAndLanguage();
   }
   if(/[A-Z]/.test(str)){
-    createKeyboard(keyArrEnCaps);
-    document.getElementById('CapsLock').classList.add('active');
     keyboardLanguage = 'en';
-    saveState(); 
     keyboardCaps = true;
+    saveState(); 
+    detectedCapsAndLanguage();
+    document.getElementById('CapsLock').classList.add('active'); 
   }
 };
 

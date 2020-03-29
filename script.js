@@ -14,7 +14,6 @@ const saveState = () => {
 };
 
 const restoreState = () => {
-  console.log('restore')
   keyboardLanguage = (localStorage.getItem('keyboard-lang')) ? localStorage.getItem('keyboard-lang') : 'en';
 };
 //create object with all key
@@ -146,6 +145,14 @@ document.addEventListener('mousedown', (event) =>{
     }
   }
 
+  if (targetId === 'Backspace'){
+    keyBackspace();
+  }
+
+  if (targetId === 'Delete'){
+    keyDelete();
+  }
+
   active(event.target);
   printInInput(targetId);
 });
@@ -249,7 +256,6 @@ function deleteKeyboard(){
 }
 
 const detectedCapsAndLanguage =(str) =>{
-  console.log('создание клавиатуры');
   if (keyboardCaps){
     if(keyboardLanguage === 'ru'){
       createKeyboard(keyArrRuCaps);
@@ -284,6 +290,23 @@ const changeLanguage = () => {
   else{
     keyboardLanguage = 'ru';
     saveState(); 
+  }
+}
+
+const keyBackspace = () => {
+  console.log('backspace');
+  inputKeyboard.setRangeText("", inputKeyboard.selectionStart, inputKeyboard.selectionEnd, "end");
+  if (inputKeyboard.selectionStart === inputKeyboard.selectionEnd) {
+    inputKeyboard.setRangeText("", inputKeyboard.selectionStart - 1, inputKeyboard.selectionEnd, "end")
+  }
+}
+
+const keyDelete = () => {
+  console.log('delete');
+  if (inputKeyboard.selectionStart === inputKeyboard.selectionEnd) {
+    inputKeyboard.setRangeText("", inputKeyboard.selectionStart, inputKeyboard.selectionEnd + 1, "end")
+  } else if (inputKeyboard.selectionStart != inputKeyboard.selectionEnd) {
+    inputKeyboard.setRangeText("", inputKeyboard.selectionStart, inputKeyboard.selectionEnd, "end");
   }
 }
 

@@ -3,8 +3,8 @@ let keyboard = document.createElement('div');;
 let body = document.querySelector('body');
 let inputKeyboard = document.createElement('textarea');
 let wrapper = document.createElement('div');
-let keyboardLanguage;
-let keyboardCaps;
+let keyboardLanguage = 'en';
+let keyboardCaps = false;
 keyboard.className = 'keyboard';
 keyboard.id = 'keyboard';
 wrapper.className = 'wrapper';
@@ -47,7 +47,7 @@ body.append(wrapper);
 wrapper.append(inputKeyboard);
 
 //create keyboard
-function createKeyboard(array) {
+const createKeyboard = (array) =>{
   if (wrapper.querySelector('.keyboard')) {
     deleteKeyboard();
   }
@@ -57,10 +57,10 @@ function createKeyboard(array) {
      createKey(element);
    });
  }
-}
+};
 
 //create key
-function createKey(element){
+const createKey = (element) =>{
   let key = document.createElement('div');
   key.className = 'key';
   key.id = element;
@@ -80,19 +80,20 @@ function createKey(element){
       break;
   }
   keyboard.append(key);
-}
+  keyboard.addEventListener('mouseout', onMouseOut);
+};
 
 
-function active(target) {
+const active = (target) => {
   if(target.classList.contains('key')){ 
     target.classList.add('active');
   }
-}
+};
 
-function unActive(target) {
+const unActive = (target) => {
   target.classList.remove('active');
   return target; 
-}
+};
 
 
 document.addEventListener('mouseup', (event) =>{
@@ -103,34 +104,48 @@ document.addEventListener('mouseup', (event) =>{
 });
 
 document.addEventListener('mousedown', (event) =>{
-  if (event.target.id === 'Ру'){
+  let targetId = event.target.id;
+  if (targetId === 'Ру'){
       keyboardLanguage = 'ru';
       detectedCapsAndLanguage();
   }
-  if (event.target.id === 'En'){
+
+  if (targetId === 'En'){
     keyboardLanguage = 'en';
     detectedCapsAndLanguage();
   }
-  if (checkCapsOrShift(event.target.id)){
-    if (checkActiveIncludes(event.target.id)){
+
+  if (checkCapsOrShift(targetId)){
+    if (checkActiveIncludes(targetId)){
       unActive(event.target);
       keyboardCaps = false;
       detectedCapsAndLanguage(event.target);
+      
       return;
     }
     active(event.target);
     keyboardCaps = true;
     detectedCapsAndLanguage(event.target);
+    document.getElementById(targetId).classList.add('active');
     return;
   }
+
+  if (targetId === 'Ctrl' || targetId === 'Alt' || targetId === 'alt'){
+    if (checkShift()){
+      changeLanguage();
+      keyboardCaps = false;
+      detectedCapsAndLanguage();
+    }
+  }
+
   active(event.target);
-  printInInput(event.target.id);
+  printInInput(targetId);
 });
 
 document.addEventListener('keydown', (event) => keyDownKeyboard(event));
 document.addEventListener('keyup', (event) => keyUpKeyboard(event));
 
-function keyDownKeyboard(event){
+let keyDownKeyboard = (event) => {
   if(event.key === 'Control'){
     document.getElementById('Ctrl').classList.add('active');
     return;
@@ -141,9 +156,9 @@ function keyDownKeyboard(event){
   }
   printInInput(event.key);
   document.getElementById(event.key).classList.add('active');
-}
+};
 
-function keyUpKeyboard(event){
+let keyUpKeyboard = (event) => {
   if(event.key === 'Control'){
     document.getElementById('Ctrl').classList.remove('active');
     return;
@@ -153,9 +168,9 @@ function keyUpKeyboard(event){
     return;
   }
   document.getElementById(event.key).classList.remove('active');
-}
+};
 
-function languageDetected(str){
+const languageDetected = (str) =>{
   if(/[а-я]/.test(str)){
     createKeyboard(keyArrRu);
     keyboardLanguage = 'ru';
@@ -182,7 +197,7 @@ function languageDetected(str){
     let newText = prompt("не удалось определить язык, введите букву", 1)
     languageDetected(newText);
   }
-}
+};
 
 function printInInput(str){
   if(str === 'Tab'){
@@ -190,6 +205,9 @@ function printInInput(str){
   } 
   if(str === 'space'){
     inputKeyboard.value += ' ';
+  }
+  if(str === 'Enter'){
+    inputKeyboard.value += '\n';
   }
   if (str.length == 1){
   inputKeyboard.value += str;
@@ -208,21 +226,29 @@ function checkActiveIncludes (str){
   }
 }
 
+let checkShift = () =>{
+  let shiftActive = document.getElementById('Shift').classList.contains('active');
+  let rShiftActive = document.getElementById('r-shift').classList.contains('active');
+  if (shiftActive || rShiftActive){
+    return true;
+  }
+}
+
 function deleteKeyboard(){
   while (keyboard.hasChildNodes()) {  
     keyboard.removeChild(keyboard.firstChild);
   } 
 }
 
-function detectedCapsAndLanguage(str){
+const detectedCapsAndLanguage =(str) =>{
   if (keyboardCaps){
     if(keyboardLanguage === 'ru'){
       createKeyboard(keyArrRuCaps);
-      document.getElementById(str.id).classList.add('active');
+      
     }
     if(keyboardLanguage === 'en'){
       createKeyboard(keyArrEnCaps); 
-      document.getElementById(str.id).classList.add('active');
+      
     }
   }
   if (!keyboardCaps){
@@ -233,5 +259,25 @@ function detectedCapsAndLanguage(str){
       createKeyboard(keyArrEn);
     }
   }
+};
+
+const onMouseOut = (event) => {
+  if (event.fromElement && event.toElement && event.fromElement.id && event.toElement.id) {
+    if (!(event.target.id ==='CapsLock') && !(event.target.id ==='Shift') && !(event.target.id ==='r-shift')){
+      unActive(event.target);
+    }
+  }
+};
+
+const changeLanguage = () => {
+  if (keyboardLanguage === 'ru'){
+    console
+    keyboardLanguage = 'en';
+  }
+  else{
+    keyboardLanguage = 'ru';
+  }
 }
-languageDetected(text);
+
+
+detectedCapsAndLanguage();

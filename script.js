@@ -1,4 +1,3 @@
-let text = prompt("Введите символ для определения языка и регистра", );
 let keyboard = document.createElement('div');;
 let body = document.querySelector('body');
 let inputKeyboard = document.createElement('textarea');
@@ -10,7 +9,14 @@ keyboard.id = 'keyboard';
 wrapper.className = 'wrapper';
 inputKeyboard.className = 'input-keyboard';
 
+const saveState = () => {
+  localStorage.setItem('keyboard-lang', keyboardLanguage);
+};
 
+const restoreState = () => {
+  console.log('restore')
+  keyboardLanguage = (localStorage.getItem('keyboard-lang')) ? localStorage.getItem('keyboard-lang') : 'en';
+};
 //create object with all key
 const keyArrEn = [
   ['`', '1', "2", "3", "4", "5", "6", "7", "8", "9", "0", "-", "=", 'Backspace', ],
@@ -107,11 +113,13 @@ document.addEventListener('mousedown', (event) =>{
   let targetId = event.target.id;
   if (targetId === 'Ру'){
       keyboardLanguage = 'ru';
+      saveState(); 
       detectedCapsAndLanguage();
   }
 
   if (targetId === 'En'){
     keyboardLanguage = 'en';
+    saveState(); 
     detectedCapsAndLanguage();
   }
 
@@ -174,28 +182,28 @@ const languageDetected = (str) =>{
   if(/[а-я]/.test(str)){
     createKeyboard(keyArrRu);
     keyboardLanguage = 'ru';
+    saveState(); 
     keyboardCaps = false;
   }
   if(/[А-Я]/.test(str)){
     createKeyboard(keyArrRuCaps);
     document.getElementById('CapsLock').classList.add('active');
     keyboardLanguage = 'ru';
+    saveState(); 
     keyboardCaps = true;
   }
   if(/[a-z]/.test(str)){
     createKeyboard(keyArrEn);
     keyboardLanguage = 'en';
+    saveState(); 
     eyboardCaps = false;
   }
   if(/[A-Z]/.test(str)){
     createKeyboard(keyArrEnCaps);
     document.getElementById('CapsLock').classList.add('active');
     keyboardLanguage = 'en';
+    saveState(); 
     keyboardCaps = true;
-  }
-  if(!(/[a-z]/i.test(str)) && !(/[а-я]/i.test(str))){
-    let newText = prompt("не удалось определить язык, введите букву", 1)
-    languageDetected(newText);
   }
 };
 
@@ -241,14 +249,13 @@ function deleteKeyboard(){
 }
 
 const detectedCapsAndLanguage =(str) =>{
+  console.log('создание клавиатуры');
   if (keyboardCaps){
     if(keyboardLanguage === 'ru'){
       createKeyboard(keyArrRuCaps);
-      
     }
     if(keyboardLanguage === 'en'){
       createKeyboard(keyArrEnCaps); 
-      
     }
   }
   if (!keyboardCaps){
@@ -271,13 +278,16 @@ const onMouseOut = (event) => {
 
 const changeLanguage = () => {
   if (keyboardLanguage === 'ru'){
-    console
     keyboardLanguage = 'en';
+    saveState(); 
   }
   else{
     keyboardLanguage = 'ru';
+    saveState(); 
   }
 }
 
-
-detectedCapsAndLanguage();
+window.onload = () => {
+  restoreState();
+  detectedCapsAndLanguage();
+};

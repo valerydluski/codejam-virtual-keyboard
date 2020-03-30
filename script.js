@@ -258,7 +258,7 @@ function deleteKeyboard(){
   } 
 }
 
-const detectedCapsAndLanguage =(str) =>{
+const detectedCapsAndLanguage =() =>{
   if (keyboardCaps){
     if(keyboardLanguage === 'ru'){
       createKeyboard(keyArrRuCaps);

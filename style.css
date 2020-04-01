@@ -1,0 +1,78 @@
+ 
+.wrapper{
+    max-width: 1020px;
+    height: 900px;
+    color: blanchedalmond;
+    display: block;
+    margin: auto;
+} 
+
+.input-keyboard{
+    color: blanchedalmond;
+    background-color: #d6564f;
+    height: 30%;
+    width: 100%;
+    padding-top: 11px;
+    padding-left: 15px;
+    font-size: 18px;
+    border: 2px solid;
+    border-radius: 6px;
+    resize: none;
+    margin: 0;
+  }
+
+  .keyboard{
+    height: 50%;
+    width: 100%; 
+    margin: 3% 1%;
+    background-color: #808080;
+    border: 2px solid lightcyan;
+    border-radius: 1%;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+  }
+
+  .key{
+    height: 14%;
+    width: 6%;
+    background-color: lightslategrey;
+    margin: 0.14%;
+    text-align: center;
+    padding-top: 2%;
+  }
+
+  .big-key{
+    width: 12%;
+  }
+
+  .space{
+    width: 48%;
+  }
+  
+  .active{
+    background-color: lime;
+    border-radius: 10%;
+  }
+
+ 
+  @keyframes bounce {
+    from {
+        -webkit-transform: scale3d(1, 1, 1);
+        transform: scale3d(1, 1, 1);
+      }
+    
+      50% {
+        -webkit-transform: scale3d(0.5, 0.5, 0.5);
+        transform: scale3d(0.5, 0.5, 0.5);
+      }
+    
+      to {
+        -webkit-transform: scale3d(1, 1, 1);
+        transform: scale3d(1, 1, 1);
+      }
+  }
+  .key:active{
+    animation-name: bounce;
+    animation-duration: 0.2s;
+  }

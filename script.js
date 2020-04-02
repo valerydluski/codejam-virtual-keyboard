@@ -184,7 +184,6 @@ document.addEventListener('keydown', (event) => keyDownKeyboard(event));
 document.addEventListener('keyup', (event) => keyUpKeyboard(event));
 
 let keyDownKeyboard = (event) => {
-  console.log(event)
   let keyCode = event.code;
   if(event.key === 'Control'){
     document.getElementById('Ctrl').classList.add('active');
@@ -229,6 +228,7 @@ let keyDownKeyboard = (event) => {
     return;
   }
   document.getElementById(event.key).classList.add('active');
+  printInInput(event.key);
 };
 
 let keyUpKeyboard = (event) => {
@@ -299,7 +299,7 @@ const languageDetected = (str) =>{
   }
 };
 
-function printInInput(str){
+const printInInput = (str) =>{
   if(str === 'Tab'){
     inputKeyboard.value += '        ';
   } 
@@ -407,9 +407,13 @@ const keyDelete = () => {
   }
 }
 
-document.getElementById('input').onkeydown = function(e){
-  if(e.keyCode==9 || e.which==9){
-      e.preventDefault();
+document.getElementById('input').onkeydown = function(event){
+  if (event.key.length===1){
+    event.preventDefault();
+  }
+  
+  if(event.keyCode==9 || event.which==9){
+      event.preventDefault();
       let s = this.selectionStart;
       this.value = this.value.substring(0,this.selectionStart) + "\t" + this.value.substring(this.selectionEnd);
       this.selectionEnd = s+1; 

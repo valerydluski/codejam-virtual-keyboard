@@ -2,12 +2,15 @@ let keyboard = document.createElement('div');
 let body = document.querySelector('body');
 let inputKeyboard = document.createElement('textarea');
 let wrapper = document.createElement('div');
+let someText = document.createElement('p');
 let keyboardLanguage = 'en';
 let keyboardCaps = false;
 keyboard.className = 'keyboard';
 keyboard.id = 'keyboard';
 wrapper.className = 'wrapper';
 inputKeyboard.className = 'input-keyboard';
+
+
 
 const saveState = () => {
   localStorage.setItem('keyboard-lang', keyboardLanguage);
@@ -50,6 +53,9 @@ const specialKey = ["Backquote","Minus","Equal", "BracketLeft", "BracketRight", 
 //create input for keyboard
 body.append(wrapper);
 wrapper.append(inputKeyboard);
+wrapper.append(someText);
+someText.textContent = 'переключение раскладки языка: shift+ctrl или shift+alt или специальная клавиша';
+
 
 //create keyboard
 const createKeyboard = (array) =>{
@@ -73,6 +79,20 @@ const createKey = (element) =>{
     key.id = 'space';
   }
   key.textContent = `${element}`;
+  switch (element){
+    case '↑':
+      key.id = 'ArrowUp';
+      break;
+    case '←':
+      key.id = 'ArrowLeft';
+      break;
+    case '↓':
+      key.id = 'ArrowDown';
+      break;
+    case '→':
+      key.id = 'ArrowRight';
+      break; 
+  }
   switch (element) {
     case ' ':
       key.classList.add('space');
@@ -162,6 +182,7 @@ document.addEventListener('keydown', (event) => keyDownKeyboard(event));
 document.addEventListener('keyup', (event) => keyUpKeyboard(event));
 
 let keyDownKeyboard = (event) => {
+  console.log(event)
   let keyCode = event.code;
   if(event.key === 'Control'){
     document.getElementById('Ctrl').classList.add('active');
@@ -183,6 +204,10 @@ let keyDownKeyboard = (event) => {
     keyboardCaps = true;
     detectedCapsAndLanguage();
     document.getElementById('Shift').classList.add('active');
+    return;
+  }
+  if(keyCode === 'Space'){
+    document.getElementById('space').classList.add('active');
     return;
   }
   if(event.key === '|'){
@@ -219,6 +244,10 @@ let keyUpKeyboard = (event) => {
     document.getElementById('Shift').classList.remove('active');
     keyboardCaps = false;
     detectedCapsAndLanguage();
+    return;
+  }
+  if(event.code === 'Space'){
+    document.getElementById('space').classList.remove('active');
     return;
   }
   if (event.key === '|'){

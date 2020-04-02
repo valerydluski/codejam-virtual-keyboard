@@ -76,3 +76,8 @@
     animation-name: bounce;
     animation-duration: 0.2s;
   }
+
+  p{
+    font-size: 18px;
+    color: black;
+  }

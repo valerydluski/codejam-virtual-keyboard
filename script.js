@@ -299,13 +299,27 @@ const languageDetected = (str) =>{
 
 function printInInput(str){
   if(str === 'Tab'){
-    inputKeyboard.value += '  ';
+    inputKeyboard.value += '        ';
   } 
   if(str === 'space'){
     inputKeyboard.value += ' ';
   }
   if(str === 'Enter'){
     inputKeyboard.value += '\n';
+  }
+  switch (str){
+    case 'ArrowUp':
+      inputKeyboard.value += '↑';
+      break;
+    case 'ArrowLeft':
+      inputKeyboard.value += '←';
+      break;
+    case 'ArrowDown':
+      inputKeyboard.value += '↓';
+      break;
+    case 'ArrowRight':
+      inputKeyboard.value += '→';
+      break; 
   }
   if (str.length == 1){
   inputKeyboard.value += str;

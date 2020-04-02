@@ -12,6 +12,7 @@ inputKeyboard.className = 'input-keyboard';
 
 
 
+
 const saveState = () => {
   localStorage.setItem('keyboard-lang', keyboardLanguage);
 };
@@ -53,6 +54,7 @@ const specialKey = ["Backquote","Minus","Equal", "BracketLeft", "BracketRight", 
 //create input for keyboard
 body.append(wrapper);
 wrapper.append(inputKeyboard);
+inputKeyboard.id = 'input';
 wrapper.append(someText);
 someText.textContent = 'переключение раскладки языка: shift+ctrl или shift+alt или специальная клавиша';
 
@@ -402,6 +404,15 @@ const keyDelete = () => {
     inputKeyboard.setRangeText("", inputKeyboard.selectionStart, inputKeyboard.selectionEnd + 1, "end")
   } else if (inputKeyboard.selectionStart != inputKeyboard.selectionEnd) {
     inputKeyboard.setRangeText("", inputKeyboard.selectionStart, inputKeyboard.selectionEnd, "end");
+  }
+}
+
+document.getElementById('input').onkeydown = function(e){
+  if(e.keyCode==9 || e.which==9){
+      e.preventDefault();
+      let s = this.selectionStart;
+      this.value = this.value.substring(0,this.selectionStart) + "\t" + this.value.substring(this.selectionEnd);
+      this.selectionEnd = s+1; 
   }
 }
 

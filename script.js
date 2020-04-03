@@ -136,7 +136,6 @@ keyboard.addEventListener('mouseup', (event) =>{
 
 keyboard.addEventListener('mousedown', (event) =>{
   let targetId = event.target.id;
-  console.log(event.target.id);
   
   if (targetId === 'en'){
     changeLanguage();
@@ -167,7 +166,11 @@ let keyDownKeyboard = (event) => {
     switchLanguage();
     return;
   }
-  
+  if(keyCode == 'ShiftLeft' || keyCode == 'ShiftRight' ){
+    if(checkShift()){
+      return;
+    }
+  }
   if(specialKey.includes(keyCode)){
     downSpecialKey(keyCode, event.target);
     return;
@@ -297,7 +300,6 @@ document.getElementById('input').onkeydown = function(event){
 }
 
 let downSpecialKey = (id, target) =>{
-  console.log('спец кнопка', id);
   switch (id){
     case 'Backspace':
       active(id);

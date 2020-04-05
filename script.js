@@ -368,10 +368,7 @@ document.addEventListener('keyup', (event) => keyUpKeyboard(event));
 
 
 document.getElementById('input').onkeydown = function forTab(event) {
-  if (event.key.length === 1) {
-    event.preventDefault();
-  }
-
+  event.preventDefault();
   if (event.keyCode === 9 || event.which === 9) {
     event.preventDefault();
     const s = this.selectionStart;

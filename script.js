@@ -132,6 +132,8 @@ keyboard.addEventListener('mouseup', (event) =>{
     return;
   }
   unActive(event.target.id);
+  inputKeyboard.blur();
+  inputKeyboard.focus(); 
 });
 
 keyboard.addEventListener('mousedown', (event) =>{
@@ -198,10 +200,12 @@ let keyUpKeyboard = (event) => {
     return;
   }
   document.getElementById(event.code).classList.remove('active');
+  inputKeyboard.blur();
+  inputKeyboard.focus(); 
 };
 
 const printInInput = (str) =>{
-  inputKeyboard.value += str; 
+  inputKeyboard.value += str;
 }
 
 function checkCapsOrShift (str){

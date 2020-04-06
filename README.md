@@ -1,5 +1,12 @@
 # codejam-virtual-keyboard
+Демо: https://valerydluski.github.io/codejam-virtual-keyboard/
+Убедительная просьба, если ставите не максимальный балл, оставлять контакт для связи.
+Клавиатура делалась под ОС windows.
+Переключение раскладок: 
+1)На виртуальной клавиатуре кликом по кнопке Shift и после этого кликом по кнопкам: ctrl или alt.
+2)На физической клавиатуре с помощью комбинации ctrl+alt.
 
+Контакт для связи: discord - Valery Dluski#3588; telegram - @ValeryDluski
 ## Критерий оценки:
 **Максимальный балл за задание: 110**
 
@@ -24,22 +31,16 @@
 
 # RSS Виртуальная клавиатура
 
-### Deadline: 06.11.2019 23:59 
+### Deadline: 07.04.2020 23:59
 
 ## Задание
-
-#### Вам нужно создать виртуальную клавиатуру наподобие такой:
-![](https://i.imgur.com/MUYRlDL.png)
 
 ### Функциональные требования:
 - дизайн — на ваше усмотрение
 - изначально файл index.html должен быть пустым (все необходимые элементы генерируются с использованием JS)
 - нажатие на кнопкy физической клавиатуры должно подсвечивать нажатую кнопку на виртуальной:
-  ![](https://i.imgur.com/yU70dGz.png)
 - Если нажатие происходит на несколько кнопок, то подсвечиваются все нажатые кнопки (исключений нет и для ctrl-alt-shift):
-  ![](https://i.imgur.com/5sg3wmF.png)
 - виртуальная клавиатура должна уметь переключаться между русской и английской раскладками (сочетание клавиш — на ваше усмотрение), при этом на кнопках должны отображаться символы выбранного языка:
-  ![](https://i.imgur.com/SRvkXxc.png)
 - выбранный язык должен сохраняться после перезагрузки страницы
 - анимация нажатия на кнопку
 - клики по кнопкам (мышкой) на виртуальной клавиатуре выводят символы в инпут, расположенный на странице над клавиатурой
@@ -80,20 +81,3 @@
 
 `штрафы:`
 - ошибки или предупреждения eslint-config-airbnb-base: `-15`
-
-## FAQ
-https://www.youtube.com/watch?v=1wefQGlnPis&feature=youtu.be
-
-## Материалы по теме:
-
-- [Demo](https://wonderful-swartz-d8b98d.netlify.com/)
-- [DOM](http://learn.javascript.ru/document)
-- [Video DOM](https://www.youtube.com/watch?v=TewWd-6ZrmE)
-- [Event](http://learn.javascript.ru/event-details)
-- [Video DOM Events](https://www.youtube.com/watch?v=vcXehC9JgGU&feature=youtu.be)
-- [Video DOM & DOM Events](https://www.youtube.com/watch?v=UaCGsLvviCA&index=11&list=PLe--kalBDwjhdXudsOpKooP6q9bAl3rPG)
-- [An Introduction To DOM Events](https://www.smashingmagazine.com/2013/11/an-introduction-to-dom-events/)
-- [Keycode](https://keycode.info)
-- [Клавиатура](https://learn.javascript.ru/keyboard-events)
-- [eslint (eslint-config-airbnb-base)](https://eslint.org/)
-

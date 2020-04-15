@@ -4,7 +4,8 @@
   "description": "**Максимальный балл за задание: 110**",
   "main": "script.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "stylelint": "npx stylelint \"**/*.css\""
   },
   "repository": {
     "type": "git",
@@ -17,12 +18,18 @@
   },
   "homepage": "https://github.com/valerydluski/codejam-virtual-keyboard#readme",
   "devDependencies": {
+    "@babel/cli": "^7.8.4",
+    "@babel/core": "^7.9.0",
+    "@babel/node": "^7.8.7",
+    "@babel/preset-env": "^7.9.5",
     "@typescript-eslint/eslint-plugin": "^2.25.0",
     "@typescript-eslint/parser": "^2.25.0",
     "eslint": "^6.8.0",
     "eslint-config-airbnb-base": "^14.1.0",
     "eslint-plugin-import": "^2.20.1",
-    "eslint-plugin-vue": "^6.2.2"
+    "eslint-plugin-vue": "^6.2.2",
+    "stylelint": "^13.3.2",
+    "stylelint-config-standard": "^20.0.0"
   },
   "dependencies": {},
   "keywords": []
